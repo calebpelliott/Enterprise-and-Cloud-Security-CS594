@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14247368104420" configfile="/ChatWebApp/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="764" id="pf14247376295281" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14247376295282 pf14247376295283 pf14247376295284 pf14247376295285 pf14247376295286 pf14247376295287" path="/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="338" y="764" id="pf14247376295288" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14247376295289 pf142473762952810 pf142473762952811 pf142473762952812" inlinks="pf14247376295282 pf14247376295284 pf14247376295285" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/viewUsers.xhtml" x="554" y="1532" id="pf142473762952813" referenceLink="//@navigationRule.6/@navigationCase.0/@toViewId|" outlinks="pf142473762952815 pf14559004847710" inlinks="pf14247376295283 pf142473762952810 pf14557180873892 pf14557180873893 pf14559132420460" path="/admin/viewUsers.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="loginError.xhtml" x="554" y="764" id="pf142473762952818" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14247376295289" path="/loginError.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/editUser.xhtml" x="338" y="1979" id="pf142473762952820" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf14557180873893" inlinks="pf142473762952815" path="/admin/editUser.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="moderator/viewMessages.xhtml" id="pf142473762952821" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf14247376295286 pf142473762952811" path="/moderator/viewMessages.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="poster/viewMessages.xhtml" id="pf142473762952922" referenceLink="//@navigationRule.1/@navigationCase.3/@toViewId|" inlinks="pf14247376295287 pf142473762952812" path="/poster/viewMessages.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/*" id="pf14557180873894" referenceLink="//@navigationRule.6/@fromViewId|" outlinks="pf14557180873892" path="/admin/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="addUser/addUser.xhtml" id="pf14559004847711" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf14559004847712" inlinks="pf14559004847710" path="/addUser/addUser.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="addUser/qrcode.xhtml" id="pf14559004847713" referenceLink="//@navigationRule.4/@fromViewId|" outlinks="pf14559132420460" inlinks="pf14559004847712" path="/addUser/qrcode.xhtml"/>
+  <links id="pf14247376295282" target="pf14247376295288" source="pf14247376295281" outcome="NAV_LOGIN"/>
+  <links id="pf14247376295283" target="pf142473762952813" source="pf14247376295281" outcome="NAV_ADMIN"/>
+  <links id="pf14247376295284" target="pf14247376295288" source="pf14247376295281" outcome="NAV_LOGOUT_SUCCESS"/>
+  <links id="pf14247376295285" target="pf14247376295288" source="pf14247376295281" outcome="NAV_LOGOUT_FAILURE"/>
+  <links id="pf14247376295289" target="pf142473762952818" source="pf14247376295288" outcome="NAV_LOGIN_ERROR"/>
+  <links id="pf142473762952810" target="pf142473762952813" source="pf14247376295288" outcome="NAV_ADMIN_LOGGED_IN"/>
+  <links id="pf142473762952815" target="pf142473762952820" source="pf142473762952813" outcome="NAV_ADMIN_EDIT_USER"/>
+  <links id="pf14247376295286" target="pf142473762952821" source="pf14247376295281" outcome="NAV_MODERATOR"/>
+  <links id="pf14247376295287" target="pf142473762952922" source="pf14247376295281" outcome="NAV_POSTER"/>
+  <links id="pf142473762952811" target="pf142473762952821" source="pf14247376295288" outcome="NAV_MODERATOR_LOGGED_IN"/>
+  <links id="pf142473762952812" target="pf142473762952922" source="pf14247376295288" outcome="NAV_POSTER_LOGGED_IN"/>
+  <links id="pf14557180873892" target="pf142473762952813" source="pf14557180873894" outcome="NAV_ADMIN_VIEW_USERS"/>
+  <links id="pf14557180873893" target="pf142473762952813" source="pf142473762952820" outcome="NAV_ADMIN_EDITED_USER"/>
+  <links id="pf14559004847710" target="pf14559004847711" source="pf142473762952813" outcome="NAV_ADMIN_ADD_USER"/>
+  <links id="pf14559004847712" target="pf14559004847713" source="pf14559004847711" outcome="NAV_ADMIN_ADDING_USER"/>
+  <links id="pf14559132420460" target="pf142473762952813" source="pf14559004847713" outcome="NAV_ADMIN_ADDED_USER"/>
+</pageflow:Pageflow>

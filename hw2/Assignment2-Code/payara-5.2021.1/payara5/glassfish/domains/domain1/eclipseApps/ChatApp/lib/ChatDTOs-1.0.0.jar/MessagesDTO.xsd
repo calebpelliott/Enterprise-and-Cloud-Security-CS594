@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<schema targetNamespace="http://cs594.stevens.edu/chat/service/dto" jaxb:version="2.0" 
+	elementFormDefault="unqualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" 
+	  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+  jaxb:extensionBindingPrefixes="xjc"
+	xmlns:tns="http://cs594.stevens.edu/chat/service/dto"
+	attributeFormDefault="unqualified">
+
+	<annotation>
+		<appinfo>
+			<jaxb:globalBindings generateIsSetMethod="true">
+        		<xjc:serializable uid="1"/>
+				<jaxb:javaType name="java.util.Date" xmlType="dateTime"
+					parseMethod="edu.stevens.cs594.chat.service.dto.util.DateAdapter.parseDate"
+					printMethod="edu.stevens.cs594.chat.service.dto.util.DateAdapter.printDate" />
+			</jaxb:globalBindings>
+		</appinfo>
+	</annotation>
+
+	<element name="user-dto">
+		<complexType>
+			<sequence>
+				<element name="username" type="string" />
+				<element name="password" type="string" />
+				<element name="roles" type="string" minOccurs="0" maxOccurs="unbounded" />
+				<element name="name" type="string" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="role-dto">
+		<complexType>
+			<sequence>
+				<element name="rolename" type="string" />
+				<element name="display-name" type="string" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="message-dto">
+		<complexType>
+			<sequence>
+				<element name="id" type="long" />
+				<element name="text" type="string" />
+				<element name="sender" type="string" />
+				<element name="timestamp" type="dateTime" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>
+

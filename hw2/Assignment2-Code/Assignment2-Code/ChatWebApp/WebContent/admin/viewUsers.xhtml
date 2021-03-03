@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="../WEB-INF/templates/template.xhtml">
+	<ui:define name="title">#{bundle['admin.users.title']}</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<p align="center">
+				<h:dataTable id="users" summary="#{bundle['admin.users.caption']}"
+					styleClass="gridTable" value="#{viewUsersBacking.users}" var="user">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle['admin.users.username']}" />
+						</f:facet>
+						<h:link outcome="NAV_ADMIN_EDIT_USER">
+    						<f:param name="id" value="#{user.username}" />
+							<h:outputText id="username" size="20" value="#{user.username}" />
+						</h:link>
+						<h:message for="username" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{bundle['admin.users.name']}" />
+						</f:facet>
+						<h:outputText id="name" size="20" value="#{user.name}" />
+						<h:message for="name" />
+					</h:column>
+					<f:facet name="caption">
+						<h:outputText value="#{bundle['admin.users.caption']}" />
+					</f:facet>
+				</h:dataTable>
+			</p>
+
+			<p align="center">
+				<h:commandButton 
+					value="#{bundle['admin.users.addAction']}" 
+					action="#{viewUsersBacking.addUser}"/>
+				<br/>
+				<h:messages globalOnly="true" />
+			</p>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

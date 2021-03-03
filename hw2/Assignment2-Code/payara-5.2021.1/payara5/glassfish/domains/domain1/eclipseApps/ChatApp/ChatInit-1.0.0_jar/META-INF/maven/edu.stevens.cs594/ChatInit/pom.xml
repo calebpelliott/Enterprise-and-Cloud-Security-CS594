@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>ChatInit</artifactId>
+
+	<parent>
+		<groupId>edu.stevens.cs594</groupId>
+		<artifactId>ChatRoot</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../ChatRoot/pom.xml</relativePath>
+	</parent>
+
+	<packaging>ejb</packaging>
+	<build>
+		<sourceDirectory>ejbModule</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>ejbModule</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-ejb-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax.ejb</groupId> -->
+<!-- 			<artifactId>javax.ejb-api</artifactId> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax.enterprise</groupId> -->
+<!-- 			<artifactId>cdi-api</artifactId> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>javax.annotation</groupId> -->
+<!-- 			<artifactId>javax.annotation-api</artifactId> -->
+<!-- 			<scope>provided</scope> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatDomain</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatServiceClient</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatService</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatDTOs</artifactId>
+		</dependency>
+	</dependencies>
+</project>
