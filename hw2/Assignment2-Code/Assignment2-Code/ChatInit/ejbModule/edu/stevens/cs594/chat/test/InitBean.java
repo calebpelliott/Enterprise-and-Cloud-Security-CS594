@@ -3,6 +3,7 @@ package edu.stevens.cs594.chat.test;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.security.RunAs;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -23,8 +24,8 @@ import edu.stevens.cs594.chat.service.ejb.IMessageServiceLocal;
 @LocalBean
 @Startup
 
-// TODO run with "admin" permissions (to access MessageService)
-
+// run with "admin" permissions (to access MessageService)
+@RunAs("admin")
 public class InitBean {
 	
 	public static final String ADMINISTRATOR = Role.ROLE_ADMIN;;
@@ -45,7 +46,7 @@ public class InitBean {
 	@PostConstruct
 	private void init() {
 		
-		logger.info("Your name here: ");
+		logger.info("Your name here: Caleb Elliott");
 
 		/*
 		 * This is unnecessary, the database tables are dropped and recreated

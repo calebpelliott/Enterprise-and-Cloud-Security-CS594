@@ -12,6 +12,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
 import javax.security.enterprise.SecurityContext;
+import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
+import javax.security.enterprise.credential.Credential;
+import javax.security.enterprise.credential.Password;
+import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -107,15 +111,12 @@ public class LoginBacking extends BaseBacking {
 		HttpServletRequest request = getWebRequest();
 		HttpServletResponse response = getWebResponse();
 		
-		AuthenticationStatus status = null;
+		Credential credential = new UsernamePasswordCredential(username, new Password(password));	
 		
-		// TODO Authenticate using the security context.
+		// Authenticate using the security context.
 		// Use AuthenticationParameters.withParams() to pass credential.
-		
+		AuthenticationStatus status = securityContext.authenticate(request, response, AuthenticationParameters.withParams().credential(credential));
 
-		
-		// End TODO
-		
 		logger.info("Result of authentication: " + status);
 		
 		if (status.equals(SEND_FAILURE)) {
