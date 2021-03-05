@@ -1,0 +1,53 @@
+/* AUTOMATICALLY GENERATED ON Thu Mar 04 21:04:45 EST 2021*/
+/* DO NOT EDIT */
+
+grant {
+  permission javax.security.jacc.WebUserDataPermission "/*:/addUser/*:/moderator/*:/admin/*:/poster/*", ":CONFIDENTIAL";
+  permission javax.security.jacc.WebUserDataPermission "/admin/*";
+  permission javax.security.jacc.WebUserDataPermission "/addUser/*";
+  permission javax.security.jacc.WebUserDataPermission "/moderator/*";
+  permission javax.security.jacc.WebUserDataPermission "/poster/*";
+  permission javax.security.jacc.WebResourcePermission "/*:/addUser/*:/moderator/*:/admin/*:/poster/*";
+};
+
+grant      principal * * {
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "**";
+  permission javax.security.jacc.WebRoleRefPermission "", "**";
+  permission javax.security.jacc.WebRoleRefPermission "FacesServlet", "**";
+  permission javax.security.jacc.WebRoleRefPermission "default", "**";
+};
+
+grant      principal org.glassfish.security.common.Group "moderator" {
+  permission javax.security.jacc.WebResourcePermission "/moderator/*";
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "moderator";
+  permission javax.security.jacc.WebRoleRefPermission "default", "moderator";
+  permission javax.security.jacc.WebRoleRefPermission "", "moderator";
+  permission javax.security.jacc.WebRoleRefPermission "FacesServlet", "moderator";
+};
+
+grant      principal org.glassfish.security.common.PrincipalImpl "admin" {
+  permission javax.security.jacc.WebResourcePermission "/admin/*";
+  permission javax.security.jacc.WebResourcePermission "/addUser/*";
+  permission javax.security.jacc.WebRoleRefPermission "default", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "FacesServlet", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "", "admin";
+};
+
+grant      principal org.glassfish.security.common.Group "admin" {
+  permission javax.security.jacc.WebResourcePermission "/admin/*";
+  permission javax.security.jacc.WebResourcePermission "/addUser/*";
+  permission javax.security.jacc.WebRoleRefPermission "default", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "FacesServlet", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "admin";
+  permission javax.security.jacc.WebRoleRefPermission "", "admin";
+};
+
+grant      principal org.glassfish.security.common.Group "poster" {
+  permission javax.security.jacc.WebResourcePermission "/poster/*";
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "poster";
+  permission javax.security.jacc.WebRoleRefPermission "", "poster";
+  permission javax.security.jacc.WebRoleRefPermission "default", "poster";
+  permission javax.security.jacc.WebRoleRefPermission "FacesServlet", "poster";
+};
+

@@ -75,9 +75,46 @@
 		</auth-constraint>
 	</security-constraint>
 
-        <!-- TODO add constraints for moderator and poster access -->
+    <!-- TODO add constraints for moderator and poster access -->
+    <security-constraint>
+		<display-name>ModeratorConstraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>Moderator</web-resource-name>
+			<description></description>
+			<url-pattern>/moderator/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description></description>
+			<role-name>moderator</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<display-name>PosterConstraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>Poster</web-resource-name>
+			<description></description>
+			<url-pattern>/poster/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description></description>
+			<role-name>poster</role-name>
+		</auth-constraint>
+	</security-constraint>
 
 	<!-- TODO add a security constraint that requires SSL (HTTPS) -->
+	
+	<security-constraint>
+		<display-name>SSLConstraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>SSL</web-resource-name>
+			<description></description>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>	
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
 
 	<!-- Define security roles for the app -->
 	<security-role>
@@ -85,5 +122,12 @@
 		<role-name>admin</role-name>
 	</security-role>
 	<!-- TODO define other roles -->
-
+	<security-role>
+		<description></description>
+		<role-name>moderator</role-name>
+	</security-role>
+	<security-role>
+		<description></description>
+		<role-name>poster</role-name>
+	</security-role>
 </web-app>

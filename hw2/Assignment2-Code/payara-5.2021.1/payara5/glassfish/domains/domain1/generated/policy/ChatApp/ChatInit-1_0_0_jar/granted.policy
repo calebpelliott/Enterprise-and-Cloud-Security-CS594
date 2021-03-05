@@ -1,0 +1,15 @@
+/* AUTOMATICALLY GENERATED ON Thu Mar 04 21:14:13 EST 2021*/
+/* DO NOT EDIT */
+
+grant      principal * * {
+  permission javax.security.jacc.EJBRoleRefPermission "InitBean", "**";
+};
+
+grant      principal org.glassfish.security.common.PrincipalImpl "admin" {
+  permission javax.security.jacc.EJBRoleRefPermission "InitBean", "admin";
+};
+
+grant      principal org.glassfish.security.common.Group "admin" {
+  permission javax.security.jacc.EJBRoleRefPermission "InitBean", "admin";
+};
+

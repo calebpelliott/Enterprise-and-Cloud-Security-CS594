@@ -148,11 +148,11 @@ public class LoginBacking extends BaseBacking {
 
 		logger.info("Selected login role: "+selectedRole);
 		
-		boolean validRole = false;
 		/*
-		 * TODO Use the security context to check that the selected role is valid for this user.
+		 * Use the security context to check that the selected role is valid for this user.
 		 * this.selectedRole is the role name for the role selected in the form.
 		 */
+		boolean validRole = securityContext.isCallerInRole(selectedRole);
 		
 		if (!validRole) {
 			addMessage(Messages.login_invalid_role);

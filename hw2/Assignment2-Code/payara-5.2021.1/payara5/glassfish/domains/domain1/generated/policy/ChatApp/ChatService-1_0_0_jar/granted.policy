@@ -1,0 +1,65 @@
+/* AUTOMATICALLY GENERATED ON Thu Mar 04 21:14:13 EST 2021*/
+/* DO NOT EDIT */
+
+grant {
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "getMessages,Remote,";
+  permission javax.security.jacc.EJBMethodPermission "ChatDomainProducer", "chatDomainProducer,Local,";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "clearDatabase,Local,";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "getUser,Remote,java.lang.String";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "getMessages,Local,";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "checkOtp,Remote,java.lang.String,java.lang.Long";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "checkOtp,Local,java.lang.String,java.lang.Long";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "getUsers,Local,";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "getUsers,Remote,";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "getRoles,Local,";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "getRoles,Remote,";
+  permission javax.security.jacc.EJBMethodPermission "ChatDomainProducer", "chatDomainDispose,Local,javax.persistence.EntityManager";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "clearDatabase,Remote,";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "getUser,Local,java.lang.String";
+};
+
+grant      principal * * {
+  permission javax.security.jacc.EJBRoleRefPermission "ChatDomainProducer", "**";
+  permission javax.security.jacc.EJBRoleRefPermission "MessageServiceBean", "**";
+};
+
+grant      principal org.glassfish.security.common.Group "moderator" {
+  permission javax.security.jacc.EJBRoleRefPermission "MessageServiceBean", "moderator";
+  permission javax.security.jacc.EJBRoleRefPermission "ChatDomainProducer", "moderator";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "deleteMessage,Remote,long";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "deleteMessage,Local,long";
+};
+
+grant      principal org.glassfish.security.common.PrincipalImpl "admin" {
+  permission javax.security.jacc.EJBRoleRefPermission "MessageServiceBean", "admin";
+  permission javax.security.jacc.EJBRoleRefPermission "ChatDomainProducer", "admin";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addUser,Local,edu.stevens.cs594.chat.service.dto.UserDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addUser,Remote,edu.stevens.cs594.chat.service.dto.UserDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addTestUser,Local,edu.stevens.cs594.chat.service.dto.UserDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addRole,Local,edu.stevens.cs594.chat.service.dto.RoleDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addTestUser,Remote,edu.stevens.cs594.chat.service.dto.UserDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addRole,Remote,edu.stevens.cs594.chat.service.dto.RoleDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "editUser,Remote,edu.stevens.cs594.chat.service.dto.UserDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "editUser,Local,edu.stevens.cs594.chat.service.dto.UserDto";
+};
+
+grant      principal org.glassfish.security.common.Group "admin" {
+  permission javax.security.jacc.EJBRoleRefPermission "MessageServiceBean", "admin";
+  permission javax.security.jacc.EJBRoleRefPermission "ChatDomainProducer", "admin";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addUser,Local,edu.stevens.cs594.chat.service.dto.UserDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addUser,Remote,edu.stevens.cs594.chat.service.dto.UserDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addTestUser,Local,edu.stevens.cs594.chat.service.dto.UserDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addRole,Local,edu.stevens.cs594.chat.service.dto.RoleDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addTestUser,Remote,edu.stevens.cs594.chat.service.dto.UserDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addRole,Remote,edu.stevens.cs594.chat.service.dto.RoleDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "editUser,Remote,edu.stevens.cs594.chat.service.dto.UserDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "editUser,Local,edu.stevens.cs594.chat.service.dto.UserDto";
+};
+
+grant      principal org.glassfish.security.common.Group "poster" {
+  permission javax.security.jacc.EJBRoleRefPermission "ChatDomainProducer", "poster";
+  permission javax.security.jacc.EJBRoleRefPermission "MessageServiceBean", "poster";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addMessage,Local,edu.stevens.cs594.chat.service.dto.MessageDto";
+  permission javax.security.jacc.EJBMethodPermission "MessageServiceBean", "addMessage,Remote,edu.stevens.cs594.chat.service.dto.MessageDto";
+};
+

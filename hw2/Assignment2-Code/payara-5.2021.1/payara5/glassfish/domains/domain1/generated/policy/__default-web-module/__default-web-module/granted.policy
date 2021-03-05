@@ -1,0 +1,17 @@
+/* AUTOMATICALLY GENERATED ON Thu Mar 04 21:14:01 EST 2021*/
+/* DO NOT EDIT */
+
+grant {
+  permission javax.security.jacc.WebResourcePermission "/";
+  permission javax.security.jacc.WebUserDataPermission "/";
+};
+
+grant      principal * * {
+  permission javax.security.jacc.WebRoleRefPermission "jsp", "**";
+  permission javax.security.jacc.WebRoleRefPermission "", "**";
+  permission javax.security.jacc.WebRoleRefPermission "microprofile-metrics-resource", "**";
+  permission javax.security.jacc.WebRoleRefPermission "fish.payara.microprofile.openapi.impl.rest.app.OpenApiApplication", "**";
+  permission javax.security.jacc.WebRoleRefPermission "default", "**";
+  permission javax.security.jacc.WebRoleRefPermission "microprofile-healthcheck-servlet", "**";
+};
+
