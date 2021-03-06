@@ -12,14 +12,14 @@ import javax.security.enterprise.identitystore.PasswordHash;
 @FacesConfig(version = JSF_2_3)
 
 /*
- * TODO specify custom forms authentication with login page /login.xhtml, login error page /loginError.xhtml
+ * specify custom forms authentication with login page /login.xhtml, login error page /loginError.xhtml
  */
 @CustomFormAuthenticationMechanismDefinition(
 loginToContinue = @LoginToContinue(
 loginPage = "/login.html",
 errorPage = "/login-error.html"))
 /*
- * TODO specify authentication and authorization using a database (see spec for guidance).
+ * specify authentication and authorization using a database (see spec for guidance).
  * Set password hashing algorithm parameters to be consistent with MessageService.
  */
 @DatabaseIdentityStoreDefinition(

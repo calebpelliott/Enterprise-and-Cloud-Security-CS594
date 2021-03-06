@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.stevens.cs594.chat.domain.Role;
 import edu.stevens.cs594.chat.service.dto.RoleDto;
+import edu.stevens.cs594.chat.service.ejb.IMessageService.MessageServiceExn;
 import edu.stevens.cs594.chat.service.ejb.IMessageServiceLocal;
 import edu.stevens.cs594.chat.service.messages.Messages;
 
@@ -134,13 +135,14 @@ public class LoginBacking extends BaseBacking {
 		try {
 			Long code = null;
 			if (otpCode != null && !otpCode.isEmpty()) {
-				code = (long) Integer.parseInt(otpCode);
+				code = (long) Integer.parseInt(otpCode);				
 			}
 			/*
-			 * TODO check the input otp with what is in the user record (see loginService)
+			 * check the input otp with what is in the user record (see loginService)
 			 */
+			loginService.checkOtp(username, code);
 			
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | MessageServiceExn e) {
 			addMessage(Messages.login_malformed_code);
 			logout();
 			return null;
@@ -181,8 +183,9 @@ public class LoginBacking extends BaseBacking {
 
 
 	public boolean isLoggedIn() {
-		// TODO use security context to check if a user is logged in
-		return false;
+		// use security context to check if a user is logged in
+		boolean loggedIn = securityContext.getCallerPrincipal() != null; 
+		return loggedIn;
 	}
 
 }

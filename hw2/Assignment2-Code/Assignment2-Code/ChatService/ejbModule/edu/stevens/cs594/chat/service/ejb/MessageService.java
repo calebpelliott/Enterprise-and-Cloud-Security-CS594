@@ -188,6 +188,7 @@ public class MessageService implements IMessageServiceLocal, IMessageServiceRemo
 		/*
 		 * TODO Generate OTP authorization (see OneTimePassword)
 		 */
+		otpAuth = OneTimePassword.generateOtpAuth(dto.getUsername(), ISSUER);
 
 		return addUser(dto, otpAuth);
 	}
@@ -293,8 +294,9 @@ public class MessageService implements IMessageServiceLocal, IMessageServiceRemo
 	public long addMessage(MessageDto dto) {
 		String loggedInUser = null;
 		/*
-		 * TODO get the username of the logged-in user (use the security context)
+		 * get the username of the logged-in user (use the security context)
 		 */
+		loggedInUser = securityContext.getCallerPrincipal().getName();
 
 		if (!loggedInUser.equals(dto.getSender())) {
 			throw new IllegalStateException("Poster of message is inconsistent with message metadata.");
@@ -316,10 +318,13 @@ public class MessageService implements IMessageServiceLocal, IMessageServiceRemo
 		try {
 			User user = userDAO.getUser(username);
 			boolean validOtp = false;
+			
 			/*
-			 * TODO check that the provided OTP code matches what is in the user record,
+			 * check that the provided OTP code matches what is in the user record,
 			 * using current time. See OneTimePassword.
 			 */
+			validOtp = OneTimePassword.checkCode(user.getOtpSecret(), otpCode, System.currentTimeMillis());  //user.getOtpSecret().equals(otpCode.toString());
+			
 
 			if (!validOtp) {
 				throw new MessageServiceExn(Messages.login_invalid_code);
