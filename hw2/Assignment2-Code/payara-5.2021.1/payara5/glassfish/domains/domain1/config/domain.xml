@@ -602,7 +602,7 @@
   <deployment-groups></deployment-groups>
   <clusters></clusters>
   <applications>
-    <application deployment-time="12200" object-type="user" name="ChatApp" directory-deployed="true" location="${com.sun.aas.instanceRootURI}/eclipseApps/ChatApp/" time-deployed="1614910461918">
+    <application deployment-time="4129" object-type="user" name="ChatApp" directory-deployed="true" location="${com.sun.aas.instanceRootURI}/eclipseApps/ChatApp/" time-deployed="1615056213148">
       <property name="archiveType" value="ear"></property>
       <property name="cdiDevModeEnabled" value="false"></property>
       <property name="org.glassfish.persistence.create_table_value_property.ChatDomain" value="true"></property>
@@ -612,7 +612,7 @@
       <property name="keepstate" value="true"></property>
       <property name="isComposite" value="true"></property>
       <property name="appLocation" value="${com.sun.aas.instanceRootURI}/eclipseApps/ChatApp/"></property>
-      <property name="org.glassfish.ejb.container.application_unique_id" value="105834770616221696"></property>
+      <property name="org.glassfish.ejb.container.application_unique_id" value="105844322732408832"></property>
       <property name="org.glassfish.persistence.app_name_property" value="ChatApp"></property>
       <property name="defaultAppName" value="ChatApp"></property>
       <module name="ChatService-1.0.0.jar">

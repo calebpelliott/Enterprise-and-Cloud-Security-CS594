@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="ClinicDomain">
+		<description>Domain model for a clinical information system</description>
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>jdbc/serfdb</jta-data-source>
+		<class>edu.stevens.cs548.clinic.domain.Patient</class>
+		<class>edu.stevens.cs548.clinic.domain.Treatment</class>
+		<class>edu.stevens.cs548.clinic.domain.DrugTreatment</class>
+		<properties>
+			<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+			<property name="eclipselink.ddl-generation.output-mode" value="both"/>
+			<!--   property name="eclipselink.application-location" value="/Users/dduggan/Documents/Teach/CS548/Workspace/ClinicDomain/scripts"/-->
+			<property name="eclipselink.logging.level" value="FINEST"/>
+            <property name="eclipselink.create-ddl-jdbc-file-name" value="create-tables.jdbc"/>
+            <property name="eclipselink.drop-ddl-jdbc-file-name" value="drop-tables.jdbc"/>
+            <property name="eclipselink.target-database" value="Derby"/>
+		</properties>
+	</persistence-unit> 
+</persistence>

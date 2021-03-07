@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<h:outputStylesheet library="css" name="Site.css"/>
+<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<title><ui:insert name="title">Default title</ui:insert></title>
+
+</h:head>
+
+
+<h:body class="twoColumnHdrFtr">
+
+<!-- 	<ui:debug hotkey="x" -->
+<!-- 		rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}" /> -->
+
+	<div id="container">
+		<header id="header">
+			<h1>
+				<h:graphicImage 
+					alt="[Jive Talkin' Choirboy]"
+					library="images"
+					name="meddc-banner.gif" />
+			</h1>
+		</header>
+
+		<nav id="nav">
+			<ul>
+				<li><h:link outcome="NAV_LOGIN">#{bundle['nav.login']}</h:link></li>
+				<li><h:link outcome="NAV_ADMIN">#{bundle['nav.admin']}</h:link></li>
+				<li><h:link outcome="NAV_MODERATOR">#{bundle['nav.moderator']}</h:link></li>
+				<li><h:link outcome="NAV_POSTER">#{bundle['nav.poster']}</h:link></li>
+			</ul>
+		</nav>
+
+		<aside id="sidebar">
+			<h1>Links</h1>
+			<p>
+				<h:outputLink value="http://www.dominicduggan.org">My home page</h:outputLink>
+			</p>
+			<p>
+				<h:outputLink value="http://www.stevens.edu">Stevens home page</h:outputLink>
+			</p>
+		</aside>
+		
+		<article id="content">
+			<ui:insert name="content">
+    			Content area.  See comments below this line in the source.
+    			<!--  include your content file or uncomment the include below and create content.html in this directory -->
+				<!-- <div> -->
+				<!-- <ui:include src="content.html"/> -->
+				<!-- </div> -->
+			</ui:insert>
+		</article>
+		
+		<footer id="footer">
+			<p><h:outputText value="&#xA9;  Your Name Here"/></p>
+		</footer>
+	</div>
+
+</h:body>
+
+</html>

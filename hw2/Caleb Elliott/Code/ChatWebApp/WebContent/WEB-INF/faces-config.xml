@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config version="2.3" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="
+              http://xmlns.jcp.org/xml/ns/javaee
+              http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd">
+	
+	<!-- This part defines the internationalization for the app. -->
+	<application>
+		<!-- Locales for languages supported by the app.  There should be Messages_fr -->
+		<!-- for diagnostic messages in Frnech, Messages_cn for Chinese, etc.   	  -->
+		<locale-config>
+			<default-locale>en</default-locale>
+			<!-- <supported-locale>fr</supported-locale> -->
+		</locale-config>
+		<!-- This defines the default name of the file that contains diagnostic messages -->
+		<!-- The facelet variable 'bundle" can be used to reference messages as  -->
+		<!-- properties in actions in web pages. -->
+		<resource-bundle>
+			<base-name>edu.stevens.cs594.chat.webapp.Messages</base-name>
+			<var>bundle</var>
+		</resource-bundle>
+	</application>
+
+	<!-- These rules define the navigational structure of the Web app.  Each action method  -->
+	<!-- returns a navigation string, and this navigation logic determines what is the next -->
+	<!-- web page that should be displayed next.  -->
+	
+	<!-- See Navigation.java for navigation literal strings. -->
+	<navigation-rule>
+		<from-view-id>/*</from-view-id>
+		<navigation-case>
+			<from-outcome>NAV_LOGIN</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>NAV_ADMIN</from-outcome>
+			<to-view-id>/admin/viewUsers.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>NAV_MODERATOR</from-outcome>
+			<to-view-id>/moderator/viewMessages.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>NAV_POSTER</from-outcome>
+			<to-view-id>/poster/viewMessages.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>NAV_LOGOUT_SUCCESS</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>NAV_LOGOUT_FAILURE</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>NAV_LOGIN_ERROR</from-outcome>
+			<to-view-id>/loginError.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>NAV_ADMIN_LOGGED_IN</from-outcome>
+			<to-view-id>/admin/viewUsers.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>NAV_MODERATOR_LOGGED_IN</from-outcome>
+			<to-view-id>/moderator/viewMessages.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>NAV_POSTER_LOGGED_IN</from-outcome>
+			<to-view-id>/poster/viewMessages.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Admin navigation rules. -->
+	<navigation-rule>
+		<from-view-id>/admin/viewUsers.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>NAV_ADMIN_ADD_USER</from-outcome>
+			<to-view-id>/addUser/addUser.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>NAV_ADMIN_EDIT_USER</from-outcome>
+			<to-view-id>/admin/editUser.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/addUser/addUser.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>NAV_ADMIN_ADDING_USER</from-outcome>
+			<to-view-id>/addUser/qrcode.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/addUser/qrcode.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>NAV_ADMIN_ADDED_USER</from-outcome>
+			<to-view-id>/admin/viewUsers.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/admin/editUser.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>NAV_ADMIN_EDITED_USER</from-outcome>
+			<to-view-id>/admin/viewUsers.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/admin/*</from-view-id>
+		<navigation-case>
+			<from-outcome>NAV_ADMIN_VIEW_USERS</from-outcome>
+			<to-view-id>/admin/viewUsers.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+</faces-config>

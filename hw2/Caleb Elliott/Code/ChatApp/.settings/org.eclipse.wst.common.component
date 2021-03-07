@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+                        
+    
+    
+    
+    
+    <wb-module deploy-name="ChatApp-1.0.0">
+                                                
+        
+        
+        
+        
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+                                                
+        
+        
+        
+        
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="ChatService-1.0.0.jar" deploy-path="/" handle="module:/resource/ChatService/ChatService">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ChatInit-1.0.0.jar" deploy-path="/" handle="module:/resource/ChatInit/ChatInit">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ChatWebApp-1.0.0.war" deploy-path="/" handle="module:/resource/ChatWebApp/ChatWebApp">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ChatDomain-1.0.0.jar" deploy-path="/lib" handle="module:/resource/ChatDomain/ChatDomain">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ChatDTOs-1.0.0.jar" deploy-path="/lib" handle="module:/resource/ChatDTOs/ChatDTOs">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jaxb-runtime-2.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/glassfish/jaxb/jaxb-runtime/2.3.1/jaxb-runtime-2.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jaxb-api-2.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/xml/bind/jaxb-api/2.3.1/jaxb-api-2.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="txw2-2.3.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/glassfish/jaxb/txw2/2.3.1/txw2-2.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="istack-commons-runtime-3.0.7.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/sun/istack/istack-commons-runtime/3.0.7/istack-commons-runtime-3.0.7.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="stax-ex-1.8.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/jvnet/staxex/stax-ex/1.8/stax-ex-1.8.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="FastInfoset-1.2.15.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/sun/xml/fastinfoset/FastInfoset/1.2.15/FastInfoset-1.2.15.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="javax.activation-api-1.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ChatServiceClient-1.0.0.jar" deploy-path="/lib" handle="module:/resource/ChatServiceClient/ChatServiceClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-codec-1.10.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.10/commons-codec-1.10.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="core-3.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/google/zxing/core/3.2.0/core-3.2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="javase-3.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/google/zxing/javase/3.2.0/javase-3.2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+                                                
+        
+        
+        
+        
+        <property name="component.inclusion.patterns"/>
+                                            
+    
+    
+    
+    
+    </wb-module>
+                    
+
+
+
+
+</project-modules>

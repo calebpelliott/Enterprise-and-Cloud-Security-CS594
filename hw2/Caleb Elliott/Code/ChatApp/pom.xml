@@ -1,0 +1,137 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>ChatApp</artifactId>
+	<packaging>ear</packaging>
+
+	<parent>
+		<groupId>edu.stevens.cs594</groupId>
+		<artifactId>ChatRoot</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../ChatRoot/pom.xml</relativePath>
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<chat.dist>${user.home}/cs594</chat.dist>
+		<chat.name>ChatApp</chat.name>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<configuration>
+					<earSourceDirectory>EarContent</earSourceDirectory>
+					<generateApplicationXml>true</generateApplicationXml>
+					<version>7</version>
+					<skinnyWars>true</skinnyWars>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<modules>
+<!-- 						<webModule> -->
+<!-- 							<groupId>edu.stevens.cs594</groupId> -->
+<!-- 							<artifactId>ChatRestWebService</artifactId> -->
+<!-- 							<contextRoot>/chat-rest</contextRoot> -->
+<!-- 						</webModule> -->
+						<ejbModule>
+							<groupId>edu.stevens.cs594</groupId>
+							<artifactId>ChatService</artifactId>
+						</ejbModule>
+						<ejbModule>
+							<groupId>edu.stevens.cs594</groupId>
+							<artifactId>ChatInit</artifactId>
+						</ejbModule>
+						<webModule>
+							<groupId>edu.stevens.cs594</groupId>
+							<artifactId>ChatWebApp</artifactId>
+							<contextRoot>/chat-web</contextRoot>
+						</webModule>
+						<!-- <jarModule> -->
+						<!-- <groupId>commons-codec</groupId> -->
+						<!-- <artifactId>commons-codec</artifactId> -->
+						<!-- </jarModule> -->
+						<!-- <jarModule> -->
+						<!-- <groupId>com.google.zxing</groupId> -->
+						<!-- <artifactId>core</artifactId> -->
+						<!-- <includeInApplicationXml>true</includeInApplicationXml> -->
+						<!-- </jarModule> -->
+						<!-- <jarModule> -->
+						<!-- <groupId>com.google.zxing</groupId> -->
+						<!-- <artifactId>javase</artifactId> -->
+						<!-- <includeInApplicationXml>true</includeInApplicationXml> -->
+						<!-- </jarModule> -->
+					</modules>
+					<generateApplicationXml>true</generateApplicationXml>
+					<!-- <packagingIncludes>META-INF/**,**/Chat*.jar,**/Chat*.war</packagingIncludes> -->
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<delete file="${chat.dist}/${chat.name}.ear" />
+								<copy
+									file="${project.build.directory}/${project.build.finalName}.ear"
+									tofile="${chat.dist}/${chat.name}.ear" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatInit</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatDomain</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatDTOs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatService</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatServiceClient</artifactId>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>edu.stevens.cs594</groupId> -->
+<!-- 			<artifactId>ChatRestWebService</artifactId> -->
+<!-- 			<type>war</type> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatWebApp</artifactId>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+		</dependency>
+	</dependencies>
+</project>
