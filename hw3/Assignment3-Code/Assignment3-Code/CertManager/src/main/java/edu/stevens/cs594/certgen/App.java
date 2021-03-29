@@ -1148,9 +1148,11 @@ public class App implements Driver.Callback<App.Command,App.Option> {
 		KeyStore clientStore = load(clientKeystoreFile, clientKeystorePassword.toCharArray(), CLIENT_KEYSTORE_TYPE);
 		try {
 			PKCS10CertificationRequest csr = null;
-
+			
+			PrivateCredential pc = getCredential(clientStore, CLIENT_CERT_ALIAS, keyPasswordApp);
+			pc.
 			// TODO generate a CSR signed by the client's private key
-			csr = 
+			csr = CAUtils.createCSR(pc.getCertificate()[0]., generateKeyPair(), clientDns);
 			
 			extern(csr, new File(clientCsrFile));
 		} catch (UnrecoverableKeyException e) {
