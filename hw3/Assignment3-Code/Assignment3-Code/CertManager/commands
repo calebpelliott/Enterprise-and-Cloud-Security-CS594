@@ -7,4 +7,6 @@ exportonlinecacert --cert a.pem
 
 genclientroot --dn C=US,O=Stevens,OU=CS594,CN=CS594SelfSignedRoot --duration 5 --keystore /basedir/client/client.jks --storepass abc123 --keypass abc123
 showcerts --keystore ./basedir/client/client.jks --storepass abc123 --keypass abc123
-genclientcsr --keystore ./basedir/client/client.jks...............
+genclientcsr --keystore ./basedir/client/client.jks --storepass abc123 --keypass abc123 --csr ./basedir/client/client.csr --dns www.example.org
+genclientcert --csr ./basedir/client/client.csr --cert ./basedir/client/client.pem 
+importclientcert --keystore ./basedir/client/client.jks --storepass abc123 --keypass abc123 --cert ./basedir/client/client.pem 

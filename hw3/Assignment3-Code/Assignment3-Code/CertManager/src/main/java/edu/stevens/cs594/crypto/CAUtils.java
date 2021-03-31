@@ -279,14 +279,16 @@ public class CAUtils {
 					.addExtension(Extension.basicConstraints, true, new BasicConstraints(false))
 					.addExtension(Extension.keyUsage, true, END_USAGE);
 			
-			/*for (Attribute attr : csr.getAttributes()) {
+			for (Attribute attr : csr.getAttributes()) {
 				// Process extension request
 				if (attr.getAttrType().equals(PKCSObjectIdentifiers.pkcs_9_at_extensionRequest)) {
+					
 					// We only process a SAN extension request.
 					Extensions extensions = Extensions.getInstance(attr.getAttrValues().getObjectAt(0));
 					GeneralNames sans = GeneralNames.fromExtensions(extensions, Extension.subjectAlternativeName);
 
 					if (sans != null) {
+						certBuilder.addExtension(Extension.subjectAlternativeName, false, sans);
 						// Check SAN values for allowable values, to add to cert.
 						for (GeneralName name : sans.getNames()) {
 							switch (name.getTagNo()) {
@@ -301,7 +303,7 @@ public class CAUtils {
 						}
 					}
 				}
-			}*/
+			}
 			
 			ContentSigner sigGenerator = getContentSigner(issuerKey);
 			X509CertificateHolder certHolder = certBuilder.build(sigGenerator);

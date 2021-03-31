@@ -98,6 +98,7 @@ import java.security.spec.RSAPublicKeySpec;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -1262,6 +1263,15 @@ public class App implements Driver.Callback<App.Command,App.Option> {
 		KeyStore clientStore = load(clientKeystoreFile, clientKeystorePassword.toCharArray(), CLIENT_KEYSTORE_TYPE);
 
 		// TODO import the cert from clientCertFile and store it in the clientstore
+		Certificate clientCert = internCertificate(new File(clientCertFile));
+		//Certificate clientCert = load(clientFile, clientKeyPassword.toCharArray(), CLIENT_KEYSTORE_TYPE).getCertificate(CA_ONLINE_CERT_ALIAS);
+		PrivateCredential pc = getCredential(clientStore, CLIENT_CERT_ALIAS, clientKeyPassword.toCharArray());
+		X509Certificate[] chain =  {((X509Certificate) clientCert)};
+		//clientStore.setKeyEntry(CLIENT_CERT_ALIAS, );
+		clientStore.setKeyEntry(CLIENT_CERT_ALIAS, pc.getPrivateKey(), clientKeyPassword.toCharArray(), chain);
+		//Enumeration<String> s = clientStore.aliases();
+		//clientStore.setCertificateEntry(CLIENT_CERT_ALIAS, clientCert);
+		updateKeystore(clientKeystoreFile, clientStore, CLIENT_KEYSTORE_TYPE, clientKeyPassword.toCharArray());
 	}
 	
 	/**
