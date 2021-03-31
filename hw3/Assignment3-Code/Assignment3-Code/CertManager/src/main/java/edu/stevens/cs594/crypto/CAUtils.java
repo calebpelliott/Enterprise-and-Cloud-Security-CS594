@@ -33,6 +33,7 @@ import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v1CertificateBuilder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 import org.bouncycastle.cert.jcajce.JcaX509v1CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
@@ -160,9 +161,13 @@ public class CAUtils {
 	private static X509Certificate createCert(long id, PrivateKey issuerKey, X509Certificate issuerCert,
 			X500Name subjectName, PublicKey subjectKey, BasicConstraints basicConstraints, KeyUsage usage,
 			ExtendedKeyUsage extendedUsage, GeneralNames sans, long durationHours) throws GeneralSecurityException, CertIOException, OperatorCreationException {
+		
+		X500Name issuerName = new JcaX509CertificateHolder((X509Certificate) issuerCert).getSubject();
+		
 		X509v3CertificateBuilder certBuilder = new JcaX509v3CertificateBuilder(
 			// NOTE: BUG in slides: replace issuerCert with:
-			toX500Name(issuerCert.getSubjectX500Principal()),
+			//toX500Name(issuerCert.getSubjectX500Principal()),
+			issuerName,
 			BigInteger.valueOf(id), 
 			DateUtils.now(),
 			DateUtils.then(durationHours * DateUtils.ONE_HOUR),
@@ -174,9 +179,13 @@ public class CAUtils {
 		JcaX509ExtensionUtils extUtils = new JcaX509ExtensionUtils();
 		certBuilder.addExtension(Extension.subjectKeyIdentifier, false, extUtils.createSubjectKeyIdentifier(subjectKey))
 				.addExtension(Extension.basicConstraints, true, basicConstraints)
-				.addExtension(Extension.keyUsage, true, usage)
-				.addExtension(Extension.extendedKeyUsage, false, extendedUsage)
+				.addExtension(Extension.keyUsage, true, usage);
+				
+		if(extendedUsage != null && sans != null)
+		{
+			certBuilder.addExtension(Extension.extendedKeyUsage, false, extendedUsage)
 				.addExtension(Extension.subjectAlternativeName, false, sans);
+		}
 		
 		
 		// TODO create end certificate

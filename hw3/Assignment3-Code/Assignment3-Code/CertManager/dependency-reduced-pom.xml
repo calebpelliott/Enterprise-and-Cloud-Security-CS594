@@ -74,10 +74,10 @@
     </plugins>
   </build>
   <properties>
-    <cm.name>certmanager</cm.name>
-    <cm.dist>${user.home}/cs594</cm.dist>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <cm.main>edu.stevens.cs594.certgen.App</cm.main>
+    <cm.dist>${user.home}/cs594</cm.dist>
+    <cm.name>certmanager</cm.name>
   </properties>
 </project>
 

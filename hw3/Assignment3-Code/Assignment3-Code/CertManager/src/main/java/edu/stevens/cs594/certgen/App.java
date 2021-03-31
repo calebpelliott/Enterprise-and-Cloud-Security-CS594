@@ -1,6 +1,6 @@
 package edu.stevens.cs594.certgen;
 
-import java.io.BufferedInputStream;
+/*import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -51,15 +51,72 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
+import java.util.logging.Logger;*/
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.GeneralSecurityException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.SecureRandom;
+import java.security.Security;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.security.interfaces.RSAPrivateCrtKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.spec.RSAKeyGenParameterSpec;
+import java.security.spec.RSAPublicKeySpec;
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bouncycastle.asn1.eac.RSAPublicKey;
-import org.bouncycastle.asn1.pkcs.RSAPrivateKey;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
+/*import org.bouncycastle.asn1.eac.RSAPublicKey;
+import org.bouncycastle.asn1.pkcs.RSAPrivateKey;
+import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.openssl.PEMParser;
+import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
+import org.bouncycastle.pkcs.PKCS10CertificationRequest;*/
 //import edu.stevens.cs594.crypto.SecurityParams;
 
 import edu.stevens.cs594.crypto.CAUtils;
@@ -390,17 +447,23 @@ public class App implements Driver.Callback<App.Command,App.Option> {
 	 * Create a random RSA key pair.
 	 */
 	public static KeyPair generateKeyPair() throws GeneralSecurityException {
-		RSAPublicKeySpec pubKeySpec = new RSAPublicKeySpec(
-				new BigInteger("d46f473a2d746537de2056ae3092c451", 16),
-				new BigInteger("11", 16));
-		RSAPrivateKeySpec privKeySpec = new RSAPrivateKeySpec(
+		SecureRandom random = new SecureRandom();
+		KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA", "BC");
+		generator.initialize(2048, random);
+		//RSAPrivateKey priv = (RSAPrivateKey) kp.getPrivate();
+		//RSAPublicKey pub = (RSAPublicKey) kp.getPublic();
+		//PrivateKey priv = kp.getPrivate();
+		//priv.
+		//PublicKey pub = fromPrivateKey((PrivateKey) priv);
+		
+		//public RSAKeyGenParameterSpec RSA_KEY_SPECS = new RSAKeyGenParameterSpec(2048, RSAKeyGenParameterSpec.F4);
+		/*RSAPrivateKeySpec privKeySpec = new RSAPrivateKeySpec(
 				new BigInteger("d46f473a2d746537de2056ae3092c451", 16),
 				new BigInteger("57791d5430d593164082036ad8b29fb1", 16));
-				
-		KeyFactory kf = KeyFactory.getInstance("RSA");
-		RSAPublicKey pubKey = (RSAPublicKey) kf.generatePublic(pubKeySpec);
-		RSAPrivateKey privKey = (RSAPrivateKey) kf.generatePrivate(privKeySpec);
-		return new KeyPair((PublicKey) pubKey, (PrivateKey) privKey);
+		KeyFactory keyFactory = KeyFactory.getInstance("RSA");*/
+		//RSAPrivateKey privKey = (RSAPrivateKey) keyFactory.generatePrivate(privKeySpec);
+		//PublicKey pub = fromPrivateKey(privKey);
+		return generator.generateKeyPair();
 	}
 
 	/**
@@ -411,7 +474,7 @@ public class App implements Driver.Callback<App.Command,App.Option> {
 		BigInteger modulus;
 		if (privateKey instanceof RSAPrivateKey) {
 			// TODO Generate public key from RSA private key (see lecture)
-			modulus = ((RSAPrivateKey) privateKey).getPublicExponent();
+			modulus = ((RSAPrivateKey) privateKey).getModulus();
 			if (privateKey instanceof RSAPrivateCrtKey) {
 				exponent = ((RSAPrivateCrtKey) privateKey).getPublicExponent();
 			}else {
@@ -980,11 +1043,13 @@ public class App implements Driver.Callback<App.Command,App.Option> {
 		 * TODO Save credential in the app server keystore (use load and updateKeystore)
 		 */
 		KeyStore serverKeyStore = load(keystoreAppServerFile, keystorePasswordAppServer, APP_SERVER_KEYSTORE_TYPE);
+		serverKeyStore.setKeyEntry(SERVER_CERT_ALIAS, kp.getPrivate(), keystorePasswordAppServer, chain);
 		updateKeystore(keystoreAppServerFile, serverKeyStore, APP_SERVER_KEYSTORE_TYPE, keystorePasswordAppServer);
 		/*
 		 * TODO Save certificate in the app server truststore.
 		 */
 		KeyStore serverTrustStore = load(truststoreAppServerFile, truststorePasswordAppServer, APP_SERVER_TRUSTSTORE_TYPE);
+		serverTrustStore.setCertificateEntry(SERVER_CERT_ALIAS, cert);
 		updateKeystore(truststoreAppServerFile, serverTrustStore, APP_SERVER_TRUSTSTORE_TYPE, truststorePasswordAppServer);
 
 	}
@@ -1014,12 +1079,14 @@ public class App implements Driver.Callback<App.Command,App.Option> {
 		 * TODO Save the credentials in the online keystore (use load and updateKeystore)
 		 */
 		KeyStore caKeyStore = load(keystoreAppFile, keystorePasswordApp, APP_KEYSTORE_TYPE);
+		caKeyStore.setKeyEntry(CA_ONLINE_CERT_ALIAS, kp.getPrivate(), keystorePasswordApp, chain);
 		updateKeystore(keystoreAppFile, caKeyStore, APP_KEYSTORE_TYPE, keystorePasswordApp);
 		
 		/*
 		 * TODO Save the intermediate certificate in the app server truststore (for client authentication).
 		 */
 		KeyStore serverTrustStore = load(truststoreAppServerFile, truststorePasswordAppServer, APP_SERVER_TRUSTSTORE_TYPE);
+		serverTrustStore.setCertificateEntry(CA_ONLINE_CERT_ALIAS, cert);
 		updateKeystore(truststoreAppServerFile, serverTrustStore, APP_SERVER_TRUSTSTORE_TYPE, truststorePasswordAppServer);
 	}
 	
@@ -1032,7 +1099,7 @@ public class App implements Driver.Callback<App.Command,App.Option> {
 		
 		// TODO get online CA cert from app keystore and extract credential
 		KeyStore keystoreOnline = load(keystoreAppFile, keystorePasswordApp, APP_KEYSTORE_TYPE);
-		cred = getCredential(keystoreOnline, CA_ONLINE_CERT_ALIAS, keyPasswordApp);
+		cred = getCredential(keystoreOnline, CA_ONLINE_CERT_ALIAS, keystorePasswordApp);
 		
 		writeString(certFile, externCertificate(cred.getCertificate()[0]));
 	}
@@ -1149,10 +1216,12 @@ public class App implements Driver.Callback<App.Command,App.Option> {
 		try {
 			PKCS10CertificationRequest csr = null;
 			
-			PrivateCredential pc = getCredential(clientStore, CLIENT_CERT_ALIAS, keyPasswordApp);
-			pc.
+			PrivateCredential pc = getCredential(clientStore, CLIENT_CERT_ALIAS, clientKeyPassword.toCharArray());
+			KeyPair kp = new KeyPair(fromPrivateKey(pc.getPrivateKey()), pc.getPrivateKey());
+			X500Name clientDn = CAUtils.toX500Name(pc.getCertificate()[0].getSubjectX500Principal());
+
 			// TODO generate a CSR signed by the client's private key
-			csr = CAUtils.createCSR(pc.getCertificate()[0]., generateKeyPair(), clientDns);
+			csr = CAUtils.createCSR(clientDn, kp, clientDns);
 			
 			extern(csr, new File(clientCsrFile));
 		} catch (UnrecoverableKeyException e) {
@@ -1192,6 +1261,7 @@ public class App implements Driver.Callback<App.Command,App.Option> {
 		
 		KeyStore clientStore = load(clientKeystoreFile, clientKeystorePassword.toCharArray(), CLIENT_KEYSTORE_TYPE);
 
+		// TODO import the cert from clientCertFile and store it in the clientstore
 	}
 	
 	/**
@@ -1212,7 +1282,7 @@ public class App implements Driver.Callback<App.Command,App.Option> {
 
 		if (keystoreAppServerFile.exists()) {
 			KeyStore keystoreApp = load(keystoreAppServerFile, keystorePasswordAppServer, APP_SERVER_KEYSTORE_TYPE);
-			PrivateCredential serverSSL = getCredential(keystoreApp, SERVER_CERT_ALIAS, keyPasswordApp);
+			PrivateCredential serverSSL = getCredential(keystoreApp, SERVER_CERT_ALIAS, keyPasswordAppServer);
 			showCredentialInfo("Server:", serverSSL);
 		}
 		
