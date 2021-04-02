@@ -1,0 +1,33 @@
+Run in cmd:
+"C:\Program Files\Java\jdk-11.0.10\bin\java.exe" -classpath "C:\Users\caleb\Documents\git\Enterprise-and-Cloud-Security-CS594\hw3\Assignment3-Code\Assignment3-Code\CertManager\target\classes;C:\Users\caleb\.p2\pool\plugins\org.junit_4.13.0.v20200204-1500.jar;C:\Users\caleb\.m2\repository\org\bouncycastle\bcprov-jdk15on\1.68\bcprov-jdk15on-1.68.jar;C:\Users\caleb\.m2\repository\org\bouncycastle\bcpkix-jdk15on\1.68\bcpkix-jdk15on-1.68.jar" edu.stevens.cs594.certgen.App --basedir "C:\Users\caleb\Documents\git\Enterprise-and-Cloud-Security-CS594\hw3\Assignment3-Code\Assignment3-Code\CertManager\basedir" --passwordfile "C:\Users\caleb\Documents\git\Enterprise-and-Cloud-Security-CS594\hw3\Assignment3-Code\Assignment3-Code\CertManager\basedir\files\passwords.properties" --namesfile "C:\Users\caleb\Documents\git\Enterprise-and-Cloud-Security-CS594\hw3\Assignment3-Code\Assignment3-Code\CertManager\basedir\files\names.properties"
+java -jar ./certmanager.jar --basedir ./basedir --passwordfile ./basedir/files/passwords.properties --namesfile ./basedir/files/names.properties
+java -jar .\certmanager.jar --basedir .\basedir --passwordfile .\basedir\files\passwords.properties --namesfile .\basedir\files\names.properties
+
+gencaroot
+exportcaroot --cert caroot.pem
+
+genservercert --dns www.example.org
+genonlinecacert
+exportonlinecacert --cert onlineca.pem
+
+genclientroot --dn C=US,O=Stevens,OU=CS594,CN=CS594SelfSignedRoot --duration 5 --keystore /basedir/client/client.jks --storepass abc123 --keypass abc123
+showcerts --keystore ./basedir/client/client.jks --storepass abc123 --keypass abc123
+genclientcsr --keystore ./basedir/client/client.jks --storepass abc123 --keypass abc123 --csr ./basedir/client/client.csr --dns www.example.org
+genclientcert --csr ./basedir/client/client.csr --cert ./basedir/client/client.pem 
+importclientcert --keystore ./basedir/client/client.jks --storepass abc123 --keypass abc123 --cert ./basedir/client/client.pem 
+
+
+
+
+gencaroot
+exportcaroot --cert .\caroot.pem
+
+genservercert --dns www.example.org
+genonlinecacert
+exportonlinecacert --cert .\onlineca.pem
+
+genclientroot --dn C=US,O=Stevens,OU=CS594,CN=CS594SelfSignedRoot --duration 5 --keystore .\basedir\client\client.jks --storepass abc123 --keypass abc123
+showcerts --keystore .\basedir\client\client.jks --storepass abc123 --keypass abc123
+genclientcsr --keystore .\basedir\client\client.jks --storepass abc123 --keypass abc123 --csr .\basedir\client\client.csr --dns www.example.org
+genclientcert --csr .\basedir\client\client.csr --cert .\basedir\client\client.pem 
+importclientcert --keystore .\basedir\client\client.jks --storepass abc123 --keypass abc123 --cert .\basedir\client\client.pem 

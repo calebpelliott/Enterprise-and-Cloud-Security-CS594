@@ -174,19 +174,19 @@ public class Driver<Command extends Enum<Command>, Option extends Enum<Option>> 
 		Console console = System.console();
 		
 		//Remove after debug
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-		String line = bufferedReader.readLine();
-		line = line.trim();
+		//BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		//String line = bufferedReader.readLine();
+		//line = line.trim();
 		//Remove after debug
 		
 		//Include after debug
-		/*if (console == null) {
+		if (console == null) {
 			throw new IOException(WarningInteractive);
 		}
 		String line = console.readLine(prompt);
 		if (line != null) {
 			line = line.trim();
-		}*/
+		}
 		//Include after debug
 		
 		return line;
