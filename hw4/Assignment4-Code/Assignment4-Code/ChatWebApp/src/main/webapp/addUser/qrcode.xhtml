@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="../WEB-INF/templates/template.xhtml">
+	<ui:define name="title">#{bundle['admin.user.qrcode.title']}</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<p align="center">
+				<h:outputText value="#{bundle['admin.user.qrcode.text']}" />
+			</p>
+			<p align="center">
+				<!-- <h:graphicImage value="data:#{addUserBacking.imageType()};base64,#{addUserBacking.qrCode()}" />  -->
+				<!-- Reported that JSF sometimes adds a jsessionid to the image url, so use <img> tag -->
+				<img src="data:#{addUserBacking.imageType()};base64,#{addUserBacking.qrCode()}" />
+			</p>
+			<p align="center">
+			    <h:commandButton value="#{bundle['admin.user.qrcode.continue']}" action="NAV_ADMIN_ADDED_USER"/>
+			</p>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

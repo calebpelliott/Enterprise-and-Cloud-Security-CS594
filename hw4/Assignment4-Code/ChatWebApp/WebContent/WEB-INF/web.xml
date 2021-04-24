@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+	                              http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+	<display-name>ChatWebApp</display-name>
+	<welcome-file-list>
+		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>index.jsf</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>FacesServlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FacesServlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.xhtml</param-value>
+	</context-param>
+	<context-param>
+		<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>resources.application</param-value>
+	</context-param>
+	<context-param>
+		<description>Required for FlowScoped</description>
+		<param-name>javax.faces.CLIENT_WINDOW_MODE</param-name>
+		<param-value>url</param-value>
+	</context-param>
+	<context-param>
+		<description>Obsolete for JSF 2.3</description>
+		<param-name>javax.faces.ENABLE_CDI_RESOLVER_CHAIN</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<listener>
+		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+	</listener>
+
+	<!-- Security constraints enforcing access control to Web app paths -->
+	<security-constraint>
+		<display-name>AdminConstraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>Admin</web-resource-name>
+			<description></description>
+			<url-pattern>/admin/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description></description>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<security-constraint>
+		<display-name>AddUserConstraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>AddUser</web-resource-name>
+			<description></description>
+			<url-pattern>/addUser/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description></description>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+    <!-- TODO add constraints for moderator and poster access -->
+    <security-constraint>
+		<display-name>ModeratorConstraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>Moderator</web-resource-name>
+			<description></description>
+			<url-pattern>/moderator/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description></description>
+			<role-name>moderator</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<display-name>PosterConstraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>Poster</web-resource-name>
+			<description></description>
+			<url-pattern>/poster/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<description></description>
+			<role-name>poster</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<!-- add a security constraint that requires SSL (HTTPS) -->
+	
+	<security-constraint>
+		<display-name>SSLConstraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>SSL</web-resource-name>
+			<description></description>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>	
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	<!-- Define security roles for the app -->
+	<security-role>
+		<description></description>
+		<role-name>admin</role-name>
+	</security-role>
+	<!-- define other roles -->
+	<security-role>
+		<description></description>
+		<role-name>moderator</role-name>
+	</security-role>
+	<security-role>
+		<description></description>
+		<role-name>poster</role-name>
+	</security-role>
+</web-app>

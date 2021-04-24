@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="ChatDomain">
+		<description>Domain model for a simple chat system</description>
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>jdbc/cs594</jta-data-source>
+		<class>edu.stevens.cs594.chat.domain.User</class>
+		<class>edu.stevens.cs594.chat.domain.Role</class>
+		<class>edu.stevens.cs594.chat.domain.Message</class>
+		<properties>
+			<property name="eclipselink.target-database" value="PostgreSQL"/>
+
+			<!-- See more at: http://www.eclipse.org/eclipselink/documentation/2.5/jpa/extensions/p_ddl_generation.htm -->
+<!-- 			<property name="eclipselink.ddl-generation" value="create-or-extend-tables" /> -->
+			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
+<!-- 			<property name="eclipselink.ddl-generation" value="create-tables" /> -->
+			<property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL.sql" />
+			<property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL.sql" />
+			<property name="eclipselink.ddl-generation.output-mode" value="database"/>
+		</properties>
+	</persistence-unit>
+</persistence>

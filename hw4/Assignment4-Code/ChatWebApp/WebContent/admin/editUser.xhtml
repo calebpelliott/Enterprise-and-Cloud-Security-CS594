@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="../WEB-INF/templates/template.xhtml">
+	<ui:define name="title">#{bundle['admin.user.edit.title']}</ui:define>
+
+	<ui:define name="content">
+		<f:metadata>
+			<f:viewParam name="id" value="#{editUserBacking.username}" />
+			<!-- You would normally also convert/validate it here. -->
+			<f:viewAction action="#{editUserBacking.load()}" />
+		</f:metadata>
+
+		<h:form>
+			<p align="center">
+				<h:panelGrid columns="2">
+					<h:outputLabel for="usernameOutput">
+        					#{bundle['admin.user.username']}:
+    					</h:outputLabel>
+					<h:outputText id="usernameOutput"
+						value="#{editUserBacking.username}" />
+					<h:outputLabel for="passwordInput">
+        					#{bundle['admin.user.password']}:
+    					</h:outputLabel>
+					<h:inputSecret id="passwordInput" value="#{editUserBacking.password}" />
+					<h:outputLabel for="nameInput">
+        					#{bundle['admin.user.name']}:
+    					</h:outputLabel>
+					<h:inputText id="nameInput" value="#{editUserBacking.name}" />
+				</h:panelGrid>
+			</p>
+			<p align="center">
+				<h:selectManyCheckbox id="roles" layout="pageDirection"
+					value="#{editUserBacking.selectedRoles}">
+					<f:selectItems value="#{editUserBacking.roles}" var="role"
+						itemValue="#{role.rolename}"
+						itemLabel="#{editUserBacking.getDisplayString(role.displayName)}" />
+				</h:selectManyCheckbox>
+			</p>
+
+			<p align="center">
+				<h:commandButton value="${bundle['admin.user.save']}"
+					action="#{editUserBacking.editUser()}" />
+				<br/>
+				<h:messages globalOnly="true" />
+			</p>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>
