@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 
@@ -188,8 +189,16 @@ public class PkiService implements IPkiService {
 		X509Certificate cert = null;
 		
 		logger.info("Signing credential for "+name);
-		// TODO generate client cert from CSR using online CA key, write to certFile
-
+		// TOD generate client cert from CSR using online CA key, write to certFile
+		try {
+			cert = CAUtils.createClientCert(certId, ca.getPrivateKey(), ca.getCertificate()[0], csr, clientDns, duration);
+		} catch (CertIOException e) {
+			// TOD Auto-generated catch block
+			e.printStackTrace();
+		} catch (GeneralSecurityException e) {
+			// TOD Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		GenClientCertResponse result = new GenClientCertResponse();
 		result.setCert(CertsService.externCertificate(cert));

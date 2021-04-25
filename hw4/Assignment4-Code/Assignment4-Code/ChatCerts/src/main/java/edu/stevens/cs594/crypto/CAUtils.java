@@ -35,6 +35,7 @@ import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v1CertificateBuilder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509ExtensionUtils;
 import org.bouncycastle.cert.jcajce.JcaX509v1CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
@@ -127,20 +128,48 @@ public class CAUtils {
 	
 	/**
 	 * Build a self-signed v1 certificate to bootstrap a client.
+	 * @throws OperatorCreationException 
 	 */
 	public static X509Certificate createClientRootCert(long id, X500Name clientDn, KeyPair keyPair,
-			long durationHours) throws GeneralSecurityException {
-		// TODO generate self-signed v1 certificate
-		return null;
+			long durationHours) throws GeneralSecurityException, OperatorCreationException {
+		// TOD generate self-signed v1 certificate
+		ContentSigner sigGenerator = getContentSigner(keyPair.getPrivate());
+		X509v1CertificateBuilder certBuilder = new JcaX509v1CertificateBuilder(
+				clientDn, 
+				BigInteger.valueOf(id), 
+				DateUtils.now(),
+				DateUtils.then(durationHours * DateUtils.ONE_HOUR), 
+				clientDn, 
+				keyPair.getPublic());
+		
+		X509CertificateHolder certHolder = certBuilder.build(sigGenerator);
+		return new JcaX509CertificateConverter().setProvider("BC").getCertificate(certHolder);
 	}
 	
 	/**
 	 * Build a self-signed v3 certificate for the root CA.
+	 * @throws OperatorCreationException 
+	 * @throws CertIOException 
 	 */
 	public static X509Certificate createCaRootCert(long id, X500Name caName, KeyPair keyPair,
-			long durationHours) throws GeneralSecurityException {
-		// TODO generate root CA self-signed v3 cert
-		return null;
+			long durationHours) throws GeneralSecurityException, OperatorCreationException, CertIOException {
+		// TOD generate root CA self-signed v3 cert
+		ContentSigner sigGenerator = getContentSigner(keyPair.getPrivate());
+		X509v3CertificateBuilder certBuilder = new JcaX509v3CertificateBuilder(
+				caName, 
+				BigInteger.valueOf(id), 
+				DateUtils.now(),
+				DateUtils.then(durationHours * DateUtils.ONE_HOUR), 
+				caName, 
+				keyPair.getPublic());
+		
+		JcaX509ExtensionUtils extUtils = new JcaX509ExtensionUtils();
+		certBuilder.addExtension(Extension.subjectKeyIdentifier, false, extUtils.createSubjectKeyIdentifier(keyPair.getPublic()))
+				.addExtension(Extension.basicConstraints, true, new BasicConstraints(1))
+				.addExtension(Extension.keyUsage, true, CA_USAGE);
+		
+		X509CertificateHolder certHolder = certBuilder.build(sigGenerator);
+		return new JcaX509CertificateConverter().setProvider("BC").getCertificate(certHolder);
 	}
 	
 	/**
@@ -150,8 +179,18 @@ public class CAUtils {
 			X500Name subjectName, PublicKey subjectKey, BasicConstraints basicConstraints, KeyUsage usage,
 			ExtendedKeyUsage extendedUsage, GeneralNames sans, long durationHours) throws GeneralSecurityException {
 		try {
-			// TODO create x509v3CertificateBuilder, add extensions as described in lectures
-			X509v3CertificateBuilder certBuilder = null;
+			// TOD create x509v3CertificateBuilder, add extensions as described in lectures
+			X500Name issuerName = new JcaX509CertificateHolder((X509Certificate) issuerCert).getSubject();
+			
+			X509v3CertificateBuilder certBuilder = new JcaX509v3CertificateBuilder(
+					// NOTE: BUG in slides: replace issuerCert with:
+					//toX500Name(issuerCert.getSubjectX500Principal()),
+					issuerName,
+					BigInteger.valueOf(id), 
+					DateUtils.now(),
+					DateUtils.then(durationHours * DateUtils.ONE_HOUR),
+					subjectName, 
+					subjectKey);
 			
 			if (extendedUsage != null) {
 				// Make this non-critical to avoid errors on some platforms.
@@ -196,19 +235,36 @@ public class CAUtils {
 	
 	/**
 	 * Request a certificate from the CA certifying our signature.
+	 * @throws IOException 
+	 * @throws OperatorCreationException 
 	 */
 	public static PKCS10CertificationRequest createCSR(X500Name subject, KeyPair keyPair, 
-			String dnsAddress) throws GeneralSecurityException {
-		// TODO Generate CSR
-		return null;
+			String dnsAddress) throws GeneralSecurityException, IOException, OperatorCreationException {
+		// TOD Generate CSR
+		List<GeneralName> names = new ArrayList<GeneralName>();
+		
+		int nameType;
+		nameType = GeneralName.dNSName;
+		names.add(new GeneralName(nameType, dnsAddress));
+		
+		GeneralNames sans = new GeneralNames(names.toArray(new GeneralName[names.size()]));
+		ExtensionsGenerator extGen = new ExtensionsGenerator();
+		extGen.addExtension(Extension.subjectAlternativeName, false, sans);
+		
+		PKCS10CertificationRequestBuilder requestBuilder = new JcaPKCS10CertificationRequestBuilder(subject, keyPair.getPublic());
+		requestBuilder.addAttribute(PKCSObjectIdentifiers.pkcs_9_at_extensionRequest, extGen.generate());
+		ContentSigner sigGenerator = getContentSigner(keyPair.getPrivate());
+		PKCS10CertificationRequest request = requestBuilder.build(sigGenerator);
+		return request;
 	}
 	
 	/**
 	 * Generate a client certificate from a CSR.
+	 * @throws CertIOException 
 	 */
 	public static X509Certificate createClientCert(long id, PrivateKey issuerKey, X509Certificate issuerCert,
 			PKCS10CertificationRequest csr,  String dnsAddress, long durationHours)
-			throws GeneralSecurityException {
+			throws GeneralSecurityException, CertIOException {
 		try {
 			BasicConstraints basicConstraints = new BasicConstraints(false);
 			PublicKey subjectKey = new JcaPKCS10CertificationRequest(csr).getPublicKey();
@@ -219,9 +275,50 @@ public class CAUtils {
 				return null;
 			}
 			
-			// TODO generate client cert from the CSR (add DNS SAN if dnsAddress is provided)
+			// TOD generate client cert from the CSR (add DNS SAN if dnsAddress is provided)
+			X509v3CertificateBuilder certBuilder = new JcaX509v3CertificateBuilder(
+					issuerCert,
+					BigInteger.valueOf(id),
+					DateUtils.now(),
+					DateUtils.then(durationHours * DateUtils.ONE_HOUR),
+					csr.getSubject(),
+					subjectKey);
+			
+			JcaX509ExtensionUtils extUtils = new JcaX509ExtensionUtils();
+			certBuilder.addExtension(Extension.authorityKeyIdentifier, false, extUtils.createAuthorityKeyIdentifier(issuerCert))
+					.addExtension(Extension.subjectKeyIdentifier, false, extUtils.createSubjectKeyIdentifier(csr.getSubjectPublicKeyInfo()))
+					.addExtension(Extension.basicConstraints, true, new BasicConstraints(false))
+					.addExtension(Extension.keyUsage, true, END_USAGE);
+			
+			for (Attribute attr : csr.getAttributes()) {
+				// Process extension request
+				if (attr.getAttrType().equals(PKCSObjectIdentifiers.pkcs_9_at_extensionRequest)) {
+					
+					// We only process a SAN extension request.
+					Extensions extensions = Extensions.getInstance(attr.getAttrValues().getObjectAt(0));
+					GeneralNames sans = GeneralNames.fromExtensions(extensions, Extension.subjectAlternativeName);
 
-			return null;
+					if (sans != null) {
+						certBuilder.addExtension(Extension.subjectAlternativeName, false, sans);
+						// Check SAN values for allowable values, to add to cert.
+						for (GeneralName name : sans.getNames()) {
+							switch (name.getTagNo()) {
+								case GeneralName.dNSName:
+									if (dnsAddress != null) {
+										GeneralName san = new GeneralName(GeneralName.dNSName, dnsAddress);
+										if (!san.equals(name)) {
+											// ERROR mismatch DNS address CSR and request
+										}
+									}
+							}
+						}
+					}
+				}
+			}
+			
+			ContentSigner sigGenerator = getContentSigner(issuerKey);
+			X509CertificateHolder certHolder = certBuilder.build(sigGenerator);
+			return new JcaX509CertificateConverter().setProvider("BC").getCertificate(certHolder);
 
 		} catch (NoSuchAlgorithmException e) {
 			throw ExceptionWrapper.wrap(GeneralSecurityException.class, e);

@@ -91,8 +91,9 @@ public class ViewMessages extends BaseBacking {
 	
 	@PostConstruct
 	private void init() {
-		// TODO set this.username to be the currently logged-in user, and refresh messages.
-
+		// TOD set this.username to be the currently logged-in user, and refresh messages.
+		username = securityContext.getCallerPrincipal().getName();
+		refreshMessages();
 	}
 
 }

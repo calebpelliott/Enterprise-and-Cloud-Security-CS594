@@ -244,12 +244,10 @@ public class CertsService {
 	 * Retrieve a credential from the keystore (from CredentialManager).
 	 */
 	public PrivateCredential getCredential(KeyStore keystore, String alias, char[] password) throws GeneralSecurityException {
-		PrivateKey key = null;
-		X509Certificate[] chain = null;
+		PrivateKey key = (PrivateKey) keystore.getKey(alias, password);
+		X509Certificate[] chain = toX509Certificates(keystore.getCertificateChain(alias));
 		
-		// TODO get key and cert chain from the keystore
-
-		
+		// TOD get key and cert chain from the keystore
 		if (chain == null) {
 			throw new IllegalArgumentException("Missing certificate for credential "+alias);
 		}
@@ -261,9 +259,9 @@ public class CertsService {
 	 * Retrieve a certificate from a truststore.
 	 */
 	public X509Certificate getCertificate(KeyStore truststore, String alias) throws GeneralSecurityException {
-		Certificate certificate = null;
+		Certificate certificate = truststore.getCertificate(alias);
 		
-		// TODO get certificate from the truststore
+		// TOD get certificate from the truststore
 		
 		if (certificate == null) {
 			throw new IllegalStateException("No certificate in the truststore with alias "+alias);
@@ -281,9 +279,13 @@ public class CertsService {
 	 * Create a random RSA key pair.
 	 */
 	public KeyPair generateKeyPair() throws GeneralSecurityException {
-		// TODO generate a new RSA key pair (using BC as provider)
+		// TOD generate a new RSA key pair (using BC as provider)
 		// RSA_KEY_SPECS specifies the specs for the key....
-		return null;
+		SecureRandom random = new SecureRandom();
+		KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA", "BC");
+		generator.initialize(2048, random);
+		
+		return generator.generateKeyPair();
 	}
 
 	/**
@@ -293,8 +295,17 @@ public class CertsService {
 		BigInteger exponent;
 		BigInteger modulus;
 		if (privateKey instanceof RSAPrivateKey) {
-			// TODO Generate public key from RSA private key (see lecture)
-			return null;
+			// TOD Generate public key from RSA private key (see lecture)
+			modulus = ((RSAPrivateKey) privateKey).getModulus();
+			if (privateKey instanceof RSAPrivateCrtKey) {
+				exponent = ((RSAPrivateCrtKey) privateKey).getPublicExponent();
+			}else {
+				exponent = RSA_KEY_SPECS.getPublicExponent();
+			}
+			
+			RSAPublicKeySpec publicKeySpec = new RSAPublicKeySpec(modulus, exponent);
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			return keyFactory.generatePublic(publicKeySpec);
 		}
 		throw new GeneralSecurityException("Trying to get the public key from a non-RSA private key.");
 	}

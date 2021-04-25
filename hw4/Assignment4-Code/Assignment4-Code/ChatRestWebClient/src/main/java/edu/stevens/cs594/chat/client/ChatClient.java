@@ -11,6 +11,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -46,12 +47,14 @@ public class ChatClient {
 		TrustManager[] trustManagers = null;
 
 		if (keystore != null) {
-			// TODO complete this (init keyManagers with keystore if not null)
-
+			// TOD complete this (init keyManagers with keystore if not null)
+			KeyManager km = (KeyManager) keystore;
+			keyManagers = new KeyManager[] {km};
 		}
 
-		// TODO complete this (init trustManagers with truststore)
-
+		// TOD complete this (init trustManagers with truststore)
+		TrustManager tm = (TrustManager) truststore; 
+		trustManagers = new TrustManager[] {tm};
 
 		SSLContext context = SSLContext.getInstance("TLS");
 		context.init(keyManagers, trustManagers, null);
@@ -93,8 +96,8 @@ public class ChatClient {
 		 * Configure basic authentication for "registration" (CA that provides client cert)
 		 */
 		HttpAuthenticationFeature basicFeature = HttpAuthenticationFeature.basic(username, new String(password));
-		// TODO configure client to do BASIC authentication.
-
+		// TOD configure client to do BASIC authentication.
+		this.client = ClientBuilder.newBuilder().sslContext(sslContext).register(basicFeature).build();
 		
 		UriBuilder ub = UriBuilder.fromUri(baseUri);
 		this.uri = ub.path("resources").path("certs").build().toString();;
@@ -128,8 +131,8 @@ public class ChatClient {
 		/*
 		 * Configue cert-based authentication for posting messages
 		 */
-		// TODO configure client to do certificate-based authentication.
-
+		// TOD configure client to do certificate-based authentication.
+		this.client = ClientBuilder.newBuilder().sslContext(sslContext).build();
 		
 		UriBuilder ub = UriBuilder.fromUri(baseUri);
 		this.uri = ub.path("resources").path("forum").path("messages").build().toString();;
