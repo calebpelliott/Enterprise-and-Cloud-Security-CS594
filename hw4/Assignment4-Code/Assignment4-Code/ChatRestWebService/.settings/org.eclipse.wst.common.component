@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-                    
+                        
+    
     
     
     
     <wb-module deploy-name="chat-rest">
-                                        
+                                                
+        
         
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
-                                        
+                                                
+        
         
         
         
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
-                                        
+                                                
+        
         
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-                                        
+                                                
+        
         
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-                                        
+                                                
+        
         
         
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
         <dependent-module archiveName="ChatUtil-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChatUtil/ChatUtil">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ChatDomain-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChatDomain/ChatDomain">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ChatDTOs-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChatDTOs/ChatDTOs">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="ChatRestService-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChatRestService/ChatRestService">
@@ -38,21 +50,25 @@
         <dependent-module archiveName="ChatRestServiceClient-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChatRestServiceClient/ChatRestServiceClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-                                        
+                                                
+        
         
         
         
         <property name="java-output-path" value="/ChatRestWebService/target/classes"/>
-                                
+                                        
+        
         
         
         <property name="context-root" value="chat-rest"/>
-                                    
+                                            
+    
     
     
     
     </wb-module>
-                
+                    
+
 
 
 

@@ -7,9 +7,11 @@ import java.util.logging.Logger;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -48,13 +50,17 @@ public class ChatClient {
 
 		if (keystore != null) {
 			// TOD complete this (init keyManagers with keystore if not null)
-			KeyManager km = (KeyManager) keystore;
-			keyManagers = new KeyManager[] {km};
+			String defaultAlg = KeyManagerFactory.getDefaultAlgorithm();
+			KeyManagerFactory kmf = KeyManagerFactory.getInstance(defaultAlg); 
+			kmf.init(keystore, keystorePassword);
+			keyManagers = kmf.getKeyManagers();
 		}
 
 		// TOD complete this (init trustManagers with truststore)
-		TrustManager tm = (TrustManager) truststore; 
-		trustManagers = new TrustManager[] {tm};
+		String defaultAlg = TrustManagerFactory.getDefaultAlgorithm();
+		TrustManagerFactory tmf = TrustManagerFactory.getInstance(defaultAlg); 
+		tmf.init(truststore);
+		trustManagers = tmf.getTrustManagers();
 
 		SSLContext context = SSLContext.getInstance("TLS");
 		context.init(keyManagers, trustManagers, null);

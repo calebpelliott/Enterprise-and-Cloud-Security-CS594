@@ -4,9 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+
+import fish.payara.security.annotations.CertificateAuthenticationMechanismDefinition;
+import fish.payara.security.annotations.CertificateIdentityStoreDefinition;
 
 @ApplicationScoped
 @ApplicationPath("/resources")
@@ -18,6 +22,9 @@ import javax.ws.rs.core.Application;
 @DeclareRoles({ "poster" }) 
 
 // TODO Specify certificate realm for authentication, assign group "poster" to successful authebticators
+@CertificateAuthenticationMechanismDefinition
+@CertificateIdentityStoreDefinition("certificate")
+@RolesAllowed("poster")
 
 public class WSConfiguration extends Application {
 

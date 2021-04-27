@@ -141,7 +141,7 @@ public class PkiService implements IPkiService {
 		String appServerDir = System.getenv(APP_SERVER_DIR);
 		String domainName = System.getenv(DOMAIN_NAME);
 		String domainRoot = String.format("%s/glassfish/domains/%s", appServerDir, domainName);
-		
+		domainRoot = "C:\\Users\\caleb\\Documents\\git\\Enterprise-and-Cloud-Security-CS594\\hw2\\Assignment2-Code\\payara-5.2021.1\\payara5\\glassfish\\domains\\domain1";
 		File configDir = new File(domainRoot, "config");
 		
 		keystoreAppFile = new File(configDir, APP_KEYSTORE_FILENAME);

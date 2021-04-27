@@ -12,12 +12,17 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.AuthenticationStatus;
 import javax.security.enterprise.SecurityContext;
+import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
+import javax.security.enterprise.credential.Credential;
+import javax.security.enterprise.credential.Password;
+import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.stevens.cs594.chat.domain.Role;
 import edu.stevens.cs594.chat.service.dto.RoleDto;
+import edu.stevens.cs594.chat.service.ejb.IMessageService.MessageServiceExn;
 import edu.stevens.cs594.chat.service.ejb.IMessageServiceLocal;
 import edu.stevens.cs594.chat.service.messages.Messages;
 
@@ -105,16 +110,14 @@ public class LoginBacking extends BaseBacking {
 	public String login() {
 		
 		HttpServletRequest request = getWebRequest();
-		HttpServletResponse response = getWebResponse();
+		HttpServletResponse response = getWebResponse();		
 		
-		AuthenticationStatus status = null;
-		
-		// TODO Authenticate using the security context.
+		// TOD Authenticate using the security context.
 		// Use AuthenticationParameters.withParams() to pass credential.
+		Credential credential = new UsernamePasswordCredential(username, new Password(password));	
+		AuthenticationStatus status = securityContext.authenticate(request, response, AuthenticationParameters.withParams().credential(credential));
 		
-
-		
-		// End TODO
+		// End TOD
 		
 		logger.info("Result of authentication: " + status);
 		
@@ -136,10 +139,11 @@ public class LoginBacking extends BaseBacking {
 				code = (long) Integer.parseInt(otpCode);
 			}
 			/*
-			 * TODO check the input otp with what is in the user record (see loginService)
+			 * TOD check the input otp with what is in the user record (see loginService)
 			 */
+			loginService.checkOtp(username, code);
 			
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException | MessageServiceExn e) {
 			addMessage(Messages.login_malformed_code);
 			logout();
 			return null;
@@ -147,9 +151,9 @@ public class LoginBacking extends BaseBacking {
 
 		logger.info("Selected login role: "+selectedRole);
 		
-		boolean validRole = false;
+		boolean validRole = securityContext.isCallerInRole(selectedRole);;
 		/*
-		 * TODO Use the security context to check that the selected role is valid for this user.
+		 * TOD Use the security context to check that the selected role is valid for this user.
 		 * this.selectedRole is the role name for the role selected in the form.
 		 */
 		
@@ -180,8 +184,9 @@ public class LoginBacking extends BaseBacking {
 
 
 	public boolean isLoggedIn() {
-		// TODO use security context to check if a user is logged in
-		return false;
+		// TOD use security context to check if a user is logged in
+		boolean loggedIn = securityContext.getCallerPrincipal() != null;
+		return loggedIn;
 	}
 
 }

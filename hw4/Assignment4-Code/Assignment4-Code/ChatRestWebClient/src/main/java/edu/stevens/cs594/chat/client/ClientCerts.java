@@ -322,22 +322,21 @@ public class ClientCerts {
 			PKCS10CertificationRequest csr = null;
 
 			/*
-			 * TODO generate a CSR signed by the client's private key
+			 * TOD generate a CSR signed by the client's private key
 			 */
 			PrivateCredential pc = certsService.getCredential(clientKeyStore, CLIENT_CERT_ALIAS, keyPassword);
 			KeyPair kp = new KeyPair(certsService.fromPrivateKey(pc.getPrivateKey()), pc.getPrivateKey());
 			X500Name clientDn = CAUtils.toX500Name(pc.getCertificate()[0].getSubjectX500Principal());
-			// TODO generate a CSR signed by the client's private key
 			try {
 				csr = CAUtils.createCSR(clientDn, kp, clientDns);
 			} catch (OperatorCreationException e) {
-				// TODO Auto-generated catch block
+				// TOD Auto-generated catch block
 				e.printStackTrace();
 			} catch (GeneralSecurityException e) {
-				// TODO Auto-generated catch block
+				// TOD Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				// TOD Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -360,9 +359,12 @@ public class ClientCerts {
 		try {
 			
 			/*
-			 * TODO import the cert and store it in the clientKeyStore
+			 * TOD import the cert and store it in the clientKeyStore
 			 */
-
+			Certificate cert = CertsService.internCertificate(clientCert);
+			PrivateCredential clientCredential = certsService.getCredential(clientKeyStore, CLIENT_CERT_ALIAS, keyPassword);
+			X509Certificate[] chain =  {((X509Certificate) cert)};
+			clientKeyStore.setKeyEntry(CLIENT_CERT_ALIAS, clientCredential.getPrivateKey(), keyPassword, chain);
 			
 			/*
 			 * Save the updated keystore

@@ -1,28 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-                
+                    
+    
     
     
     <wb-module deploy-name="chat-pki">
-                                
+                                        
+        
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
-                                
+                                        
+        
         
         
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
-                                
+                                        
+        
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-                                
+                                        
+        
         
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
-                        
+                                
+        
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <dependent-module archiveName="ChatUtil-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChatUtil/ChatUtil">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ChatDomain-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChatDomain/ChatDomain">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ChatDTOs-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChatDTOs/ChatDTOs">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="ChatPkiService-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChatPkiService/ChatPkiService">
@@ -34,18 +46,22 @@
         <dependent-module archiveName="ChatPkiServiceClient-1.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ChatPkiServiceClient/ChatPkiServiceClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-                                
+                                        
+        
         
         
         <property name="java-output-path" value="/ChatPkiWebService/target/classes"/>
-                        
+                                
+        
         
         <property name="context-root" value="chat-pki"/>
-                            
+                                    
+    
     
     
     </wb-module>
-            
+                
+
 
 
 </project-modules>

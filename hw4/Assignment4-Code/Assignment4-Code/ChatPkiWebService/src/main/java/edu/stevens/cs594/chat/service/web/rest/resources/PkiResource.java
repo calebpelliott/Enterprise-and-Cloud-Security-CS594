@@ -50,7 +50,6 @@ public class PkiResource {
 
 		try {
 			GenClientCertResponse clientCert = pkiService.genClientCert(name, request);
-			
 			logger.info("Returning client cert in PEM format.");
 			return Response.ok(clientCert, MediaType.APPLICATION_XML_TYPE).build();
 		} catch (GeneralSecurityException e) {

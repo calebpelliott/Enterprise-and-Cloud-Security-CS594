@@ -1,0 +1,8 @@
+
+
+init --dn C=US,O=Stevens,OU=CS594,CN=john
+import --cert C:\Users\caleb\cs594\asgn4\onlineca.pem
+register --caUri https://127.0.0.1:8181/chat-pki --sender john --password foobar! --dns www.example.org
+register --caUri https://127.0.0.1:8181/chat-pki/resources/certs --sender john --password foobar! --dns www.example.org
+register --caUri http://127.0.0.1:8080/chat-pki/ --sender john --password foobar! --dns www.example.org <---------
+post --serverUri https://127.0.0.1:8181/chat-rest --sender john

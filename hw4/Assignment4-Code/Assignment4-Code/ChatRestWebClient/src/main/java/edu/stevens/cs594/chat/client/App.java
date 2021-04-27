@@ -37,11 +37,11 @@ public class App implements Driver.Callback<App.Command,App.Option> {
 	/**
 	 * Files:
 	 */		
-	private static final String CLIENT_KEYSTORE_FILENAME = "clientKeystore.jks";
+	private static final String CLIENT_KEYSTORE_FILENAME = "C:\\Users\\caleb\\cs594\\asgn4\\client\\clientKeystore.jks";
 	
-	private static final String CLIENT_TRUSTSTORE_FILENAME = "clientTruststore.jks";
+	private static final String CLIENT_TRUSTSTORE_FILENAME = "C:\\Users\\caleb\\cs594\\asgn4\\client\\clientTruststore.jks";
 
-	private static final String PASSWORDS_FILENAME = "passwords.properties";
+	private static final String PASSWORDS_FILENAME = "C:\\Users\\caleb\\cs594\\asgn4\\files\\passwords.properties";
 	
 	
 	private ClientCerts clientCerts;

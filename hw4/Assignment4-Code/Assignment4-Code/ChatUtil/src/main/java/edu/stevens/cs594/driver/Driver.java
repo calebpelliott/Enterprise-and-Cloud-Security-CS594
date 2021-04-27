@@ -183,14 +183,17 @@ public class Driver<Command extends Enum<Command>, Option extends Enum<Option>> 
 	}
 
 	public void interactive(String prompt) throws Exception {
-		String line = this.readLine(prompt);
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		System.out.print(prompt);
+		String line = br.readLine();
 		while (line != null) {
 			String[] optionStrs = line.split("\\s");
 			Map<Option, String> args = new HashMap<Option, String>();
 			Command command = parseCommand(optionStrs, args);
 			if (command != null) {
 				callback.execute(command, args);
-				line = this.readLine(prompt);
+				System.out.print(prompt);
+				line = br.readLine();
 			} else {
 				line = null;
 			}
