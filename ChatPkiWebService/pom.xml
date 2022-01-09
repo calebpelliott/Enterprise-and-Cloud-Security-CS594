@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>ChatPkiWebService</artifactId>
+	<packaging>war</packaging>
+
+	<parent>
+		<groupId>edu.stevens.cs594</groupId>
+		<artifactId>ChatRoot</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../ChatRoot/pom.xml</relativePath>
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<app.name>chat-pki</app.name>
+		<app.dist>${user.home}/cs594</app.dist>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warName>${app.name}</warName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<delete file="${app.dist}/${app.name}.jar" />
+								<copy
+									file="${project.build.directory}/${app.name}.war"
+									tofile="${app.dist}/${app.name}.war" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/javax/javaee-api -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatUtil</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatDomain</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatDTOs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatPkiService</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatPkiServiceClient</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+</project>

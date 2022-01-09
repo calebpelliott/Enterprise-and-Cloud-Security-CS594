@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="WEB-INF/templates/template.xhtml">
+	<ui:define name="title">#{bundle['login.title']}</ui:define>
+	<ui:define name="content">
+		<h:form>
+			<p align="center">
+				<h:panelGrid columns="3">
+				
+					<h:outputLabel for="usernameInput"
+						rendered="#{!loginBacking.loggedIn}">
+        				#{bundle['login.username']}:
+    				</h:outputLabel>
+					<h:inputText id="usernameInput" value="#{loginBacking.username}"
+						required="true" rendered="#{!loginBacking.loggedIn}" />
+					<h:message for="usernameInput" style="color: red"/>
+
+					<h:outputLabel for="passwordInput"
+						rendered="#{!loginBacking.loggedIn}">
+        				#{bundle['login.password']}:
+    				</h:outputLabel>
+					<h:inputSecret id="passwordInput" value="#{loginBacking.password}"
+						required="true" rendered="#{!loginBacking.loggedIn}" />
+					<h:message for="passwordInput" style="color: red"/>
+
+					<h:outputLabel for="otpCodeInput"
+						rendered="#{!loginBacking.loggedIn}">
+        				#{bundle['login.otpCode']}:
+    				</h:outputLabel>
+					<h:inputSecret id="otpCodeInput" value="#{loginBacking.otpCode}"
+						rendered="#{!loginBacking.loggedIn}" />
+					<h:message for="otpCodeInput" style="color: red"/>
+					
+				</h:panelGrid>
+				<h:messages globalOnly="true" style="color:red"/>
+			</p>
+			<p align="center">
+				<h:selectOneRadio id="roles" 
+					rendered="#{!loginBacking.loggedIn}"
+					required="true" 
+					requiredMessage="#{bundle['login.missing.role']}"
+					layout="pageDirection" 
+					value="#{loginBacking.selectedRole}">
+					<f:selectItems 
+						value="#{loginBacking.roles}" 
+						var="role"
+						itemValue="#{role.rolename}" 
+						itemLabel="#{loginBacking.getDisplayString(role.displayName)}" />
+				</h:selectOneRadio>
+				<h:message for="roles" style="color: red"/>
+			</p>
+			<p align="center">
+				<h:commandButton value="${bundle['login.login']}"
+					action="#{loginBacking.login}" rendered="#{!loginBacking.loggedIn}" />
+				<h:commandButton value="${bundle['login.logout']}"
+					action="#{loginBacking.logout}" rendered="#{loginBacking.loggedIn}" />
+			</p>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

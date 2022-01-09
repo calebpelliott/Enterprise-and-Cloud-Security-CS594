@@ -1,0 +1,133 @@
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>ChatRestWebClient</artifactId>
+	<!-- <packaging>jar</packaging> -->
+
+	<parent>
+		<groupId>edu.stevens.cs594</groupId>
+		<artifactId>ChatRoot</artifactId>
+		<version>1.0.0</version>
+		<relativePath>../ChatRoot/pom.xml</relativePath>
+	</parent>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- Where to distribute jar files (using mvn install). -->
+		<app.name>chatclient</app.name>
+		<app.dist>${user.home}/cs594</app.dist>
+		<app.main>edu.stevens.cs594.chat.client.App</app.main>
+	</properties>
+
+	<build>
+		<!-- <resources> -->
+		<!-- <resource> -->
+		<!-- <directory>src/main/resources</directory> -->
+		<!-- <filtering>true</filtering> -->
+		<!-- </resource> -->
+		<!-- </resources> -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Main-Class>${app.main}</Main-Class>
+										<Build-Number>1</Build-Number>
+									</manifestEntries>
+								</transformer>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+							</transformers>
+							<minimizeJar>false</minimizeJar>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<delete file="${app.dist}/${app.name}.jar" />
+								<copy
+									file="${project.build.directory}/${project.build.finalName}.jar"
+									tofile="${app.dist}/${app.name}.jar" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatDTOs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatPkiServiceClient</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatRestServiceClient</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatUtil</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>edu.stevens.cs594</groupId>
+			<artifactId>ChatCerts</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-jaxb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.weld.se</groupId>
+			<artifactId>weld-se-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+		</dependency>
+
+	</dependencies>
+</project>

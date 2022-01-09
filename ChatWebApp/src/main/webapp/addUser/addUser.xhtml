@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="../WEB-INF/templates/template.xhtml">
+	<ui:define name="title">#{bundle['admin.user.add.title']}</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<p align="center">
+				<h:panelGrid columns="3">
+					<h:outputLabel for="usernameInput">
+        				#{bundle['admin.user.username']}:
+    				</h:outputLabel>
+					<h:inputText id="usernameInput" value="#{addUserBacking.username}"
+						required="true" 
+						requiredMessage="#{bundle['admin.user.reqd.username']}"
+						/>
+					<h:message for="usernameInput" style="color: red"/>
+					<h:outputLabel for="passwordInput">
+        				#{bundle['admin.user.password']}:
+    				</h:outputLabel>
+					<h:inputSecret id="passwordInput"
+						value="#{addUserBacking.password}" 
+						required="true" 
+						requiredMessage="#{bundle['admin.user.reqd.password']}"
+						/>
+					<h:message for="passwordInput" style="color: red"/>
+					
+					<h:outputLabel for="passwordAgainInput">
+        				#{bundle['admin.user.password.again']}:
+    				</h:outputLabel>
+					<h:inputSecret id="passwordAgainInput"
+						value="#{addUserBacking.passwordAgain}" 
+						required="true" 
+						requiredMessage="#{bundle['admin.user.reqd.password.again']}"
+						/>
+					<h:message for="passwordAgainInput" style="color: red"/>
+					
+					<h:outputLabel for="nameInput">
+        				#{bundle['admin.user.name']}:
+    				</h:outputLabel>
+					<h:inputText id="nameInput" value="#{addUserBacking.name}"
+						required="true" 
+						requiredMessage="#{bundle['admin.user.reqd.name']}"
+						/>
+					<h:message for="nameInput" style="color: red"/>
+				</h:panelGrid>
+			</p>
+
+			<p align="center">
+				<h:selectManyCheckbox id="roles" layout="pageDirection"
+					value="#{addUserBacking.selectedRoles}">
+					<f:selectItems value="#{addUserBacking.roles}" var="role"
+						itemValue="#{role.rolename}"
+						itemLabel="#{addUserBacking.getDisplayString(role.displayName)}" />
+				</h:selectManyCheckbox>
+			</p>
+
+			<p align="center">
+				<h:commandButton value="#{bundle['admin.user.add']}"
+					action="#{addUserBacking.addUser()}" />
+				<br/>
+				<h:messages globalOnly="true" style="color: red" />
+			</p>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE payara-web-app PUBLIC "-//Payara.fish//DTD Payara Server 4 Servlet 3.0//EN" "https://raw.githubusercontent.com/payara/Payara-Server-Documentation/master/schemas/payara-web-app_4.dtd">
+<payara-web-app error-url="">
+
+	<!-- Map roles to GF groups (Database associates users with groups, not roles). -->
+
+	<context-root>chat-rest</context-root>
+	<security-role-mapping>
+		<role-name>poster</role-name>
+		<group-name>poster</group-name>
+	</security-role-mapping>
+
+	<class-loader delegate="true" />
+	<parameter-encoding default-charset="UTF-8" />
+	
+</payara-web-app>
